@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
+     <style>
         :root {
             --bg-black: #0A0A0C;
             --bg-dark-panel: #120F1D;
@@ -156,6 +156,7 @@
             align-items: center;
             gap: 8px;
             text-decoration: none;
+            white-space: nowrap;
         }
 
         .retro-btn:hover {
@@ -188,6 +189,38 @@
             letter-spacing: 1.5px;
             text-shadow: 4px 4px 0px var(--bg-black);
             margin: 0;
+        }
+
+        .project-tag-pill {
+            position: absolute;
+            bottom: -12px;
+            right: -10px;
+            background: var(--accent-yellow);
+            color: var(--bg-black);
+            border: 2px solid var(--border-stark);
+            padding: 6px 18px;
+            border-radius: 12px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 4px 4px 0px var(--bg-black);
+            transform: rotate(5deg);
+            z-index: 10;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 600px) {
+            .project-tag-pill {
+                position: relative;
+                display: inline-block;
+                bottom: auto;
+                right: auto;
+                margin-top: 10px;
+                transform: rotate(2deg);
+            }
         }
 
         .project-subtitle {
@@ -231,6 +264,27 @@
             padding: 50px 30px;
         }
 
+        .main-media-frame {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            background: #000;
+            border: 3px solid var(--border-stark);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 8px 8px 0px var(--accent-pink);
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .main-media-frame iframe, 
+        .main-media-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+        }
+
         .section-text-block {
             background: var(--bg-dark-panel);
             border: 2px solid var(--border-stark);
@@ -247,7 +301,6 @@
             font-size: clamp(2rem, 4vw, 3.2rem);
             color: var(--accent-yellow);
             text-transform: uppercase;
-       
             margin-bottom: 16px;
         }
 
@@ -294,29 +347,6 @@
             transform: scale(1.04);
         }
 
-        .chart-item-frame {
-            aspect-ratio: 771 / 360;
-            height: auto;
-            border: 2px solid var(--border-stark);
-            border-radius: 16px;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 6px 6px 0px var(--bg-purple-panel);
-            position: relative;
-        }
-
-        .chart-item-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: contrast(110%);
-            transition: transform 0.4s ease;
-        }
-
-        .chart-item-frame:hover img {
-            transform: scale(1.04);
-        }
-
         .two-col-text-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -344,7 +374,6 @@
             font-size: 2.2rem;
             color: var(--accent-pink);
             text-transform: uppercase;
-        
             margin-bottom: 12px;
         }
 
@@ -356,7 +385,7 @@
 
         .secondary-hero-frame {
             width: 100%;
-            aspect-ratio: 5062 / 2531;
+            aspect-ratio: 16 / 9;
             height: auto;
             border: 3px solid var(--border-stark);
             border-radius: 20px;
@@ -413,6 +442,8 @@
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.15s ease;
+            width: 75px;
+            text-align: center;
         }
 
         .deck-nav-btn:hover {
@@ -428,21 +459,6 @@
             text-align: center;
             box-shadow: 10px 10px 0px var(--bg-dark-panel);
             margin-bottom: 50px;
-        }
-
-        .explore-tag {
-            display: inline-block;
-            background: var(--accent-pink);
-            color: var(--bg-black);
-            border: 2px solid var(--border-stark);
-            padding: 4px 14px;
-            border-radius: 12px;
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
         }
 
         .explore-heading {
@@ -493,6 +509,99 @@
             font-size: 13px;
             color: var(--text-muted);
             text-transform: uppercase;
+        }
+
+
+ .chart-item-frame {
+            aspect-ratio: 771 / 360;
+            height: auto;
+            border: 2px solid var(--border-stark);
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 6px 6px 0px var(--bg-purple-panel);
+            position: relative;
+        }
+
+        .chart-item-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(110%);
+            transition: transform 0.4s ease;
+        }
+
+        .chart-item-frame:hover img {
+            transform: scale(1.04);
+        }
+
+
+        .secondary-hero-frame {
+            width: 100%;
+            aspect-ratio: 5062 / 2531;
+            height: auto;
+            border: 3px solid var(--border-stark);
+            border-radius: 20px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 8px 8px 0px var(--accent-blue);
+            margin-bottom: 70px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .secondary-hero-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+  
+        @media (max-width: 600px) {
+            .header-nav {
+                padding: 16px 15px;
+            }
+
+            .logo-text {
+                font-size: 15px;
+                letter-spacing: 1px;
+            }
+
+            .logo-badge {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            .header-actions {
+                gap: 8px;
+            }
+
+            .header-actions .retro-btn {
+                padding: 6px 10px;
+                font-size: 10.5px;
+                letter-spacing: 0.5px;
+                box-shadow: 2px 2px 0px var(--border-stark);
+            }
+
+            /* Compact slideshow buttons on mobile */
+            .gallery-nav-overlay {
+                bottom: 10px;
+                padding: 6px 12px;
+                gap: 8px;
+            }
+
+            .deck-nav-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+                width: 55px;
+            }
+
+            .gallery-counter {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
