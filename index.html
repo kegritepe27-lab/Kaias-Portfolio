@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaias Portfolio</title>
 
-  
-    <link rel="icon" type="image/jpeg" href="Images/favicon.jpeg">
+    <link rel="icon" type="image/jpeg" href="Images/favicon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -184,6 +183,13 @@
             position: relative;
         }
 
+        .hero-media-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
         h1.hero-title {
             font-family: 'Anton', sans-serif;
             font-size: clamp(4.5rem, 16vw, 16rem);
@@ -191,15 +197,17 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--text-white);
-            margin-bottom: 20px;
+            margin-bottom: 0;
             text-shadow: 6px 6px 0px var(--bg-purple-panel);
+            position: relative;
+            z-index: 10;
         }
 
         .avatar-area {
             position: relative;
+            margin-top: -5.5vw; /* Overlaps roughly the bottom 20-25% of the title text */
             display: inline-block;
-            margin-top: -7vw;
-            z-index: 20;
+            z-index: 30;
         }
 
         .avatar-frame {
@@ -236,13 +244,13 @@
             text-transform: uppercase;
             box-shadow: 3px 3px 0px var(--border-stark);
             transform: rotate(4deg);
-            z-index: 30;
+            z-index: 40;
             pointer-events: none;
         }
 
         .hero-bio {
             max-width: 700px;
-            margin: 30px auto 0 auto;
+            margin: 40px auto 0 auto;
             font-size: 1.15rem;
             color: var(--text-muted);
             line-height: 1.6;
@@ -308,7 +316,6 @@
             font-weight: 3500;
             font-size: clamp(2.5rem, 6vw, 5.5rem);
             text-transform: uppercase;
-           
             line-height: 0.9;
         }
 
@@ -470,7 +477,6 @@
             font-weight: 1500;
             font-size: 1.6rem;
             text-transform: uppercase;
-        
             flex: 1;
             min-width: 0;
             display: -webkit-box;
@@ -528,7 +534,7 @@
         }
 
         .discipline-title {
-           font-family: 'Oswald', sans-serif;
+            font-family: 'Oswald', sans-serif;
             font-weight: 1500;
             font-size: 1.6rem;
             text-transform: uppercase;
@@ -541,31 +547,30 @@
             line-height: 1.5;
         }
 
- .contact-panel {
-    text-align: center;
-    background: var(--bg-purple-panel);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        .contact-panel {
+            text-align: center;
+            background: var(--bg-purple-panel);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.contact-panel .section-tag {
-    display: block;
-    margin-bottom: 12px;
-}
+        .contact-panel .section-tag {
+            display: block;
+            margin-bottom: 12px;
+        }
 
-.contact-panel .huge-cta {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(3rem, 9vw, 9rem);
-    line-height: 0.88;
-    text-transform: uppercase;
-    margin: 10px 0 30px 0;
-    width: 100%;
-}
+        .contact-panel .huge-cta {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(3rem, 9vw, 9rem);
+            line-height: 0.88;
+            text-transform: uppercase;
+            margin: 10px 0 30px 0;
+            width: 100%;
+        }
 
         .huge-cta {
             font-family: 'Anton', sans-serif;
-        
             font-size: clamp(3rem, 9vw, 9rem);
             line-height: 0.88;
             text-transform: uppercase;
@@ -674,7 +679,6 @@
 
         .player-viewport, .gallery-viewport {
             width: 100%;
-            aspect-ratio: 16 / 9;
             background: #000;
             border: 2px solid var(--border-stark);
             border-radius: 12px;
@@ -683,16 +687,20 @@
             margin-bottom: 20px;
         }
 
-        .player-viewport iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .player-viewport {
+            aspect-ratio: 16 / 9;
         }
 
         .gallery-viewport {
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .player-viewport iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .gallery-viewport img {
@@ -708,12 +716,42 @@
             transform: translateX(-50%);
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             background: rgba(10, 10, 12, 0.85);
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 8px;
             border: 1px solid var(--border-subtle);
             z-index: 10;
+        }
+
+        .gallery-btn {
+            background: var(--bg-purple-panel);
+            color: var(--text-white);
+            border: 2px solid var(--border-stark);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--border-stark);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+            width: 85px;
+        }
+
+        .gallery-btn:hover {
+            background: var(--accent-pink);
+            color: var(--bg-black);
+            transform: translateY(-1px);
+            box-shadow: 3px 3px 0px var(--accent-blue);
         }
 
         .gallery-counter {
@@ -787,15 +825,51 @@
 
         @media (max-width: 768px) {
             .project-modal-info { grid-template-columns: 1fr; }
+
+        
+            .sprocket-frame {
+                height: 220px;
+            }
+
+       
+            .mail-btn {
+                padding: 12px 28px;
+                font-size: 1.1rem;
+                box-shadow: 4px 4px 0px var(--border-stark);
+            }
+
+            .mail-btn:hover {
+                box-shadow: 6px 6px 0px var(--border-stark);
+            }
+
+            /* Make slideshow navigation compact and uniform on mobile */
+            .gallery-nav-overlay {
+                bottom: 8px;
+                padding: 4px 8px;
+                gap: 8px;
+            }
+
+            .gallery-btn {
+                padding: 4px 6px !important;
+                font-size: 11px !important;
+                width: 65px !important;
+            }
+
+            .gallery-counter {
+                font-size: 11px;
+            }
+
+            /* Hide [ SKILLS ] tag when scaled down */
+            .skills-tag {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
-    
     <div class="film-grain"></div>
     <div class="crt-layer" id="crtLayer"></div>
-
 
     <header class="header-nav">
         <a href="index.html" class="logo-box">
@@ -807,14 +881,15 @@
         </div>
     </header>
 
-    
     <section class="hero">
-        <h1 class="hero-title glitch-text" id="heroTitle">Filmmaker</h1>
-        <div class="avatar-area">
-            <div class="avatar-frame">
-                <img src="Images/headshot.jpeg" alt="Kaia Portrait">
+        <div class="hero-media-wrapper">
+            <h1 class="hero-title glitch-text" id="heroTitle">Kaia</h1>
+            <div class="avatar-area">
+                <div class="avatar-frame">
+                    <img src="Images/headshot.jpeg" alt="Kaia Portrait">
+                </div>
+                <div class="speech-tag">Cork, Ire</div>
             </div>
-            <div class="speech-tag">Cork, Ire</div>
         </div>
         <p class="hero-bio">
             Award winning Creative Digital Media graduate and filmmaker based in Cork. During my time studying, I’ve had multiple screenings of my short films
@@ -823,11 +898,10 @@ at festivals around Ireland, travelled to HKA Karlsruhe to showcase coursework, 
         <div class="social-row">
             <a href="https://drive.google.com/file/d/1x3yYt1tXsJBNzuJJIVZOJSQ6ogAYq2l6/view" target="_blank" class="social-pill">CV</a>
             <a href="https://www.linkedin.com/in/kaiae/" target="_blank" class="social-pill">in</a>
-            <a href="mailto:kegritepe27@gmail.com" class="social-pill">Email</a>
+            <a href="mailto:kegritepe27@gmail.com" class="social-pill">@</a>
         </div>
     </section>
 
-    
     <div class="section-wrapper">
         <div class="panel-box">
             <div class="section-header-bar">
@@ -837,7 +911,6 @@ at festivals around Ireland, travelled to HKA Karlsruhe to showcase coursework, 
 
             <div class="works-grid">
 
-              
                 <div class="film-card" onclick="openModal('The New Age Enlightened Orthodox Brotherhood of the Righteous Divine', 'A scalable framework for a transmedia Alternate Reality Game, and a fictional cult that blends belief, and absurdity. Guided by a structured Project Bible, it unfolds across TikTok, Instagram, and the web. It delivers immersive storytelling that critiques power and manipulation while remaining adaptable for future expansion.', 'https://www.youtube.com/embed/Gdg0bmb39lI', 'Transmedia ARG', '2026', '8 Months', 'Solo Creator', 'tnaeobotrd.html')">
                     <div class="card-hud-info">
                         <span>Transmedia ARG</span>
@@ -957,7 +1030,7 @@ at festivals around Ireland, travelled to HKA Karlsruhe to showcase coursework, 
         <div class="panel-box">
             <div class="section-header-bar">
                 <h2 class="section-heading">Main Disciplines</h2>
-                <span class="section-tag">[ SKILLS ]</span>
+                <span class="section-tag skills-tag">[ SKILLS ]</span>
             </div>
             <div class="disciplines-grid">
                 
@@ -980,18 +1053,17 @@ at festivals around Ireland, travelled to HKA Karlsruhe to showcase coursework, 
         </div>
     </div>
 
-<div class="section-wrapper">
-    <div class="panel-box contact-panel">
-        <span class="section-tag">[ COLLABORATE ]</span>
-        <h2 class="huge-cta glitch-text">
-            <a href="https://www.linkedin.com/in/kaiae/" target="_blank" style="text-decoration: none; color: inherit; display: inline-block;">
-                Let's Connect!
-            </a>
-        </h2>
-        <a href="mailto:kegritepe27@gmail.com" class="mail-btn">Or Email Me Here!</a>
+    <div class="section-wrapper">
+        <div class="panel-box contact-panel">
+            <span class="section-tag">[ COLLABORATE ]</span>
+            <h2 class="huge-cta glitch-text">
+                <a href="https://www.linkedin.com/in/kaiae/" target="_blank" style="text-decoration: none; color: inherit; display: inline-block;">
+                    Let's Connect!
+                </a>
+            </h2>
+            <a href="mailto:kegritepe27@gmail.com" class="mail-btn">Or Email Me Here!</a>
+        </div>
     </div>
-</div>
-
 
     <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
         <div class="vhs-deck-modal" onclick="event.stopPropagation()">
@@ -1004,9 +1076,9 @@ at festivals around Ireland, travelled to HKA Karlsruhe to showcase coursework, 
             <div class="gallery-viewport" id="galleryViewport" style="display: none;">
                 <img id="galleryImg" src="" alt="Gallery Slide">
                 <div class="gallery-nav-overlay">
-                    <button class="deck-btn" onclick="prevSlide()" style="padding: 6px 12px; font-size: 13px;">◀ Prev</button>
+                    <button class="gallery-btn" onclick="prevSlide()">◀ Prev</button>
                     <span class="gallery-counter" id="slideCounter">1 / 1</span>
-                    <button class="deck-btn" onclick="nextSlide()" style="padding: 6px 12px; font-size: 13px;">Next ▶</button>
+                    <button class="gallery-btn" onclick="nextSlide()">Next ▶</button>
                 </div>
             </div>
 
@@ -1075,7 +1147,7 @@ at festivals around Ireland, travelled to HKA Karlsruhe to showcase coursework, 
             iframe.src = src;
 
             document.getElementById('modalOverlay').classList.add('active');
-            isPlaying = false; // Start paused since autoplay is disabled
+            isPlaying = false;
             updatePlayButtonText();
         }
 
@@ -1095,7 +1167,16 @@ at festivals around Ireland, travelled to HKA Karlsruhe to showcase coursework, 
             currentSlideIndex = 0;
 
             document.getElementById('videoViewport').style.display = 'none';
-            document.getElementById('galleryViewport').style.display = 'flex';
+            const galleryViewport = document.getElementById('galleryViewport');
+            galleryViewport.style.display = 'flex';
+
+            // Apply dynamic aspect ratio: ESCA uses 2/1, Divinity and others use 16/9
+            if (title === 'ESCA') {
+                galleryViewport.style.aspectRatio = '2 / 1';
+            } else {
+                galleryViewport.style.aspectRatio = '16 / 9';
+            }
+
             document.getElementById('modalIframe').src = '';
 
             updateGallerySlide();
