@@ -205,7 +205,7 @@
 
         .avatar-area {
             position: relative;
-            margin-top: -5.5vw; /* Overlaps roughly the bottom 20-25% of the title text */
+            margin-top: -5.5vw;
             display: inline-block;
             z-index: 30;
         }
@@ -826,12 +826,12 @@
         @media (max-width: 768px) {
             .project-modal-info { grid-template-columns: 1fr; }
 
-        
+            /* Maintain true 16:9 ratio on mobile view */
             .sprocket-frame {
-                height: 220px;
+                aspect-ratio: 16 / 9;
+                height: auto;
             }
 
-       
             .mail-btn {
                 padding: 12px 28px;
                 font-size: 1.1rem;
@@ -892,8 +892,8 @@
             </div>
         </div>
         <p class="hero-bio">
-            Award winning Creative Digital Media graduate and filmmaker based in Cork. During my time studying, I’ve had multiple screenings of my short films
-at festivals around Ireland, travelled to HKA Karlsruhe to showcase coursework, interned at Apple, and most recently won an award at the IDI Graduate Awards Showcase for my final year project The New Age Enlightened Orthodox Brotherhood of the Righteous Divine.
+            Award winning Creative Digital Media graduate and filmmaker based in Cork[cite: 2]. During my time studying, I’ve had multiple screenings of my short films
+at festivals around Ireland[cite: 2], travelled to HKA Karlsruhe to showcase coursework[cite: 2], interned at Apple[cite: 2], and most recently won an award at the IDI Graduate Awards Showcase for my final year project The New Age Enlightened Orthodox Brotherhood of the Righteous Divine[cite: 1, 2].
         </p>
         <div class="social-row">
             <a href="https://drive.google.com/file/d/1x3yYt1tXsJBNzuJJIVZOJSQ6ogAYq2l6/view" target="_blank" class="social-pill">CV</a>
