@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaias Portfolio</title>
+
+  
+    <link rel="icon" type="image/jpeg" href="Images/favicon.jpeg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-black: #0A0A0C;
+            --bg-dark-panel: #120F1D;
+            --bg-purple-panel: #1B122C;
+            --accent-pink: #FF2E93;
+            --accent-blue: #00F0FF;
+            --accent-yellow: #FFE600;
+            --text-white: #FFFFFF;
+            --text-muted: #A09DBA;
+            --border-stark: #FFFFFF;
+            --border-subtle: #30264A;
+            --vhs-green: #00FF66;
+            --crt-scanline: rgba(18, 16, 16, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            line-height: 1.4;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .film-grain {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200vw;
+            height: 200vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 9998;
+            animation: grainShift 0.3s steps(4) infinite;
+        }
+
+        @keyframes grainShift {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-3%, 3%); }
+            50% { transform: translate(3%, -2%); }
+            75% { transform: translate(-2%, -3%); }
+            100% { transform: translate(2%, 1%); }
+        }
+
+        .crt-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 50%,
+                var(--crt-scanline) 50%,
+                var(--crt-scanline)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9997;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .crt-layer.off {
+            opacity: 0;
+        }
+
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+            transition: text-shadow 0.1s ease-out;
+            cursor: pointer;
+        }
+
+        .header-nav {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-white);
+        }
+
+        .logo-badge {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-pink);
+            color: var(--bg-black);
+            border: 2px solid var(--border-stark);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 22px;
+            font-family: 'Anton', sans-serif;
+            box-shadow: 4px 4px 0px var(--accent-blue);
+        }
+
+        .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .controls-bar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .retro-btn {
+            background: var(--bg-dark-panel);
+            color: var(--text-white);
+            border: 2px solid var(--border-stark);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--border-stark);
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .retro-btn:hover {
+            background: var(--accent-pink);
+            color: var(--bg-black);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--accent-blue);
+        }
+
+        .retro-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--border-stark);
+        }
+
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px 80px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1.hero-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(4.5rem, 16vw, 16rem);
+            line-height: 0.82;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-white);
+            margin-bottom: 20px;
+            text-shadow: 6px 6px 0px var(--bg-purple-panel);
+        }
+
+        .avatar-area {
+            position: relative;
+            display: inline-block;
+            margin-top: -7vw;
+            z-index: 20;
+        }
+
+        .avatar-frame {
+            width: clamp(150px, 14vw, 240px);
+            height: clamp(150px, 14vw, 240px);
+            border-radius: 16px;
+            border: 3px solid var(--border-stark);
+            overflow: hidden;
+            box-shadow: 8px 8px 0px var(--accent-pink);
+            position: relative;
+            background: var(--bg-purple-panel);
+            z-index: 1;
+        }
+
+        .avatar-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(115%) saturate(120%);
+        }
+
+        .speech-tag {
+            position: absolute;
+            top: -15px;
+            right: -25px;
+            background: var(--accent-yellow);
+            color: var(--bg-black);
+            border: 2px solid var(--border-stark);
+            padding: 6px 16px;
+            border-radius: 12px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            box-shadow: 3px 3px 0px var(--border-stark);
+            transform: rotate(4deg);
+            z-index: 30;
+            pointer-events: none;
+        }
+
+        .hero-bio {
+            max-width: 700px;
+            margin: 30px auto 0 auto;
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .social-row {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .social-pill {
+            width: 46px;
+            height: 46px;
+            background: var(--bg-purple-panel);
+            border: 2px solid var(--border-stark);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Oswald', sans-serif;
+            box-shadow: 3px 3px 0px var(--border-stark);
+            transition: all 0.2s ease;
+        }
+
+        .social-pill:hover {
+            background: var(--accent-blue);
+            color: var(--bg-black);
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px var(--accent-pink);
+        }
+
+        .section-wrapper {
+            max-width: 1400px;
+            margin: 0 auto 60px auto;
+            padding: 0 30px;
+        }
+
+        .panel-box {
+            background-color: var(--bg-dark-panel);
+            border: 2px solid var(--border-stark);
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 10px 10px 0px var(--bg-purple-panel);
+            position: relative;
+        }
+
+        .section-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border-subtle);
+            padding-bottom: 16px;
+        }
+
+        .section-heading {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 3500;
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            text-transform: uppercase;
+           
+            line-height: 0.9;
+        }
+
+        .section-tag {
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 36px;
+        }
+
+        @media (min-width: 900px) {
+            .works-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .film-card {
+            background: var(--bg-purple-panel);
+            border: 2px solid var(--border-stark);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .film-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 8px 8px 0px var(--accent-pink);
+        }
+
+        .card-hud-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-yellow);
+        }
+
+        .sprocket-frame {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            border: 2px solid var(--border-stark);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            transition: padding 0.4s ease;
+        }
+
+        .sprocket-frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            border-left: 1px solid rgba(255, 255, 255, 0.85);
+            border-right: 1px solid rgba(255, 255, 255, 0.85);
+            pointer-events: none;
+            z-index: 15;
+            transition: opacity 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 0 4px rgba(0,0,0,0.5);
+        }
+
+        .sprocket-holes-left, .sprocket-holes-right {
+            position: absolute;
+            top: 0;
+            width: 18px;
+            height: 100%;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 12px,
+                #000 12px,
+                #000 24px
+            );
+            background-size: 100% 24px;
+            z-index: 10;
+        }
+
+        .sprocket-holes-left { left: 1px; border-right: 1px solid rgba(255,255,255,0.2); }
+        .sprocket-holes-right { right: 1px; border-left: 1px solid rgba(255,255,255,0.2); }
+
+        .sprocket-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0;
+            filter: contrast(105%) grayscale(25%);
+            transition: transform 0.4s ease, filter 0.4s ease;
+            transform: scale(1);
+            position: relative;
+            z-index: 5;
+        }
+
+        .film-card:hover .sprocket-frame {
+            padding: 10px;
+        }
+
+        .film-card:hover .sprocket-frame::before {
+            opacity: 0.3;
+            border-color: var(--accent-pink);
+        }
+
+        .film-card:hover .sprocket-frame img {
+            filter: contrast(125%) saturate(125%) grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .film-stock-text {
+            position: absolute;
+            bottom: 12px;
+            right: 34px;
+            font-family: 'Oswald', monospace;
+            font-size: 11px;
+            color: var(--accent-yellow);
+            z-index: 16;
+            letter-spacing: 1px;
+            background: rgba(0,0,0,0.85);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: right 0.4s ease, bottom 0.4s ease;
+        }
+
+        .film-card:hover .film-stock-text {
+            right: 12px;
+            bottom: 12px;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            min-height: 56px;
+        }
+
+        .card-title {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 1500;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+        
+            flex: 1;
+            min-width: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.1;
+        }
+
+        .play-tape-btn {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            background: var(--accent-pink);
+            border: 2px solid var(--border-stark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-black);
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .film-card:hover .play-tape-btn {
+            background: var(--accent-blue);
+            transform: scale(1.1);
+        }
+
+        .disciplines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .discipline-card {
+            background: var(--bg-purple-panel);
+            border: 2px solid var(--border-stark);
+            border-radius: 12px;
+            padding: 28px 20px;
+            transition: all 0.2s ease;
+        }
+
+        .discipline-card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 6px 6px 0px var(--accent-blue);
+        }
+
+        .discipline-icon {
+            font-size: 28px;
+            color: var(--accent-pink);
+            margin-bottom: 12px;
+        }
+
+        .discipline-title {
+           font-family: 'Oswald', sans-serif;
+            font-weight: 1500;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .discipline-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+ .contact-panel {
+    text-align: center;
+    background: var(--bg-purple-panel);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-panel .section-tag {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.contact-panel .huge-cta {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(3rem, 9vw, 9rem);
+    line-height: 0.88;
+    text-transform: uppercase;
+    margin: 10px 0 30px 0;
+    width: 100%;
+}
+
+        .huge-cta {
+            font-family: 'Anton', sans-serif;
+        
+            font-size: clamp(3rem, 9vw, 9rem);
+            line-height: 0.88;
+            text-transform: uppercase;
+            margin: 20px 0 30px 0;
+        }
+
+        .mail-btn {
+            background: var(--accent-pink);
+            color: var(--bg-black);
+            border: 2px solid var(--border-stark);
+            padding: 18px 48px;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 6px 6px 0px var(--border-stark);
+            transition: all 0.2s ease;
+        }
+
+        .mail-btn:hover {
+            background: var(--accent-blue);
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0px var(--border-stark);
+        }
+
+        footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Fullscreen VHS Deck Modal Player */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .vhs-deck-modal {
+            background: var(--bg-dark-panel);
+            border: 3px solid var(--border-stark);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 12px 12px 0px var(--accent-pink);
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .vhs-deck-modal {
+            transform: scale(1);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-pink);
+            color: var(--bg-black);
+            border: 2px solid var(--border-stark);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--accent-blue);
+            transform: scale(1.1);
+        }
+
+        .player-viewport, .gallery-viewport {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border: 2px solid var(--border-stark);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .player-viewport iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .gallery-viewport {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-viewport img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .gallery-nav-overlay {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(10, 10, 12, 0.85);
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+            z-index: 10;
+        }
+
+        .gallery-counter {
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent-yellow);
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .deck-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .deck-btn {
+            background: var(--bg-purple-panel);
+            color: var(--text-white);
+            border: 2px solid var(--border-stark);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-stark);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            flex: 1;
+            transition: all 0.15s ease;
+        }
+
+        .deck-btn:hover {
+            background: var(--accent-pink);
+            color: var(--bg-black);
+            transform: translateY(-2px);
+            box-shadow: 5px 5px 0px var(--accent-blue);
+        }
+
+        .project-modal-info {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            border-top: 2px solid var(--border-subtle);
+            padding-top: 20px;
+        }
+
+        .modal-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .meta-list {
+            background: var(--bg-purple-panel);
+            border: 2px solid var(--border-stark);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .project-modal-info { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <div class="film-grain"></div>
+    <div class="crt-layer" id="crtLayer"></div>
+
+
+    <header class="header-nav">
+        <a href="index.html" class="logo-box">
+            <div class="logo-badge">K</div>
+            <span class="logo-text">Kaia</span>
+        </a>
+        <div class="controls-bar">
+            <button class="retro-btn" onclick="toggleCRT()">CRT: ON</button>
+        </div>
+    </header>
+
+    
+    <section class="hero">
+        <h1 class="hero-title glitch-text" id="heroTitle">Filmmaker</h1>
+        <div class="avatar-area">
+            <div class="avatar-frame">
+                <img src="Images/headshot.jpeg" alt="Kaia Portrait">
+            </div>
+            <div class="speech-tag">Cork, Ire</div>
+        </div>
+        <p class="hero-bio">
+            Award winning Creative Digital Media graduate and filmmaker based in Cork. During my time studying, I’ve had multiple screenings of my short films
+at festivals around Ireland, travelled to HKA Karlsruhe to showcase coursework, interned at Apple, and most recently won an award at the IDI Graduate Awards Showcase for my final year project The New Age Enlightened Orthodox Brotherhood of the Righteous Divine.
+        </p>
+        <div class="social-row">
+            <a href="https://drive.google.com/file/d/1x3yYt1tXsJBNzuJJIVZOJSQ6ogAYq2l6/view" target="_blank" class="social-pill">CV</a>
+            <a href="https://www.linkedin.com/in/kaiae/" target="_blank" class="social-pill">in</a>
+            <a href="mailto:kegritepe27@gmail.com" class="social-pill">Email</a>
+        </div>
+    </section>
+
+    
+    <div class="section-wrapper">
+        <div class="panel-box">
+            <div class="section-header-bar">
+                <h2 class="section-heading">Selected Works</h2>
+                <span class="section-tag">[ 01 // 06 ]</span>
+            </div>
+
+            <div class="works-grid">
+
+              
+                <div class="film-card" onclick="openModal('The New Age Enlightened Orthodox Brotherhood of the Righteous Divine', 'A scalable framework for a transmedia Alternate Reality Game, and a fictional cult that blends belief, and absurdity. Guided by a structured Project Bible, it unfolds across TikTok, Instagram, and the web. It delivers immersive storytelling that critiques power and manipulation while remaining adaptable for future expansion.', 'https://www.youtube.com/embed/Gdg0bmb39lI', 'Transmedia ARG', '2026', '8 Months', 'Solo Creator', 'tnaeobotrd.html')">
+                    <div class="card-hud-info">
+                        <span>Transmedia ARG</span>
+                        <span>2026</span>
+                    </div>
+                    <div class="card-image-wrapper">
+                        <div class="sprocket-frame">
+                            <div class="sprocket-holes-left"></div>
+                            <div class="sprocket-holes-right"></div>
+                            <img src="Images/Poster8SHowcase2Crop.png.jpg" alt="The New Age Enlightened Orthodox Brotherhood of the Righteous Divine">
+                            <div class="film-stock-text">IDI Graduate Award Winner 2026</div>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <h3 class="card-title">The New Age Enlightened Orthodox Brotherhood of the Righteous Divine</h3>
+                        <div class="play-tape-btn">▶</div>
+                    </div>
+                </div>
+
+                <div class="film-card" onclick="openGalleryModal('Divinity', 'Abstract experimental animation exploring descending stages of trans experience. Through shifting landscapes, it moves through the realities of trans identity, exploring dysphoria, the complexities of love, intimacy and lust, and the process of self-exploration.', ['Images/still.png', 'Images/still2.png', 'Images/still3.png', 'Images/still5.png', 'Images/still6.png', 'Images/still8.png'], 'Short Film', '2026', '3 Months', 'Solo Creator', 'divinity.html')">
+                    <div class="card-hud-info">
+                        <span>Short Film</span>
+                        <span>2026</span>
+                    </div>
+                    <div class="card-image-wrapper">
+                        <div class="sprocket-frame">
+                            <div class="sprocket-holes-left"></div>
+                            <div class="sprocket-holes-right"></div>
+                            <img src="Images/Divinity Thumbnail Large.jpeg" alt="Divinity">
+                            <div class="film-stock-text">New! / Screener Coming Soon</div>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <h3 class="card-title">Divinity</h3>
+                        <div class="play-tape-btn">▶</div>
+                    </div>
+                </div>
+
+                <div class="film-card" onclick="openModal('A Dream Fulfilled', 'Struggling with inner turmoil, a person spirals into isolation before a reflective journey with their younger self reveals perspective. They’ve become the person they once yearned to be. With this clarity, they find balance and reclaim their life.', 'https://www.youtube.com/embed/pBgvz8YlrQI', 'Short Film', '2025', '3 Months', 'Solo Creator', 'adreamfulfilled.html')">
+                    <div class="card-hud-info">
+                        <span>Short Film</span>
+                        <span>2025</span>
+                    </div>
+                    <div class="card-image-wrapper">
+                        <div class="sprocket-frame">
+                            <div class="sprocket-holes-left"></div>
+                            <div class="sprocket-holes-right"></div>
+                            <img src="Images/A Dream FulfilledHorizontal.jpg" alt="A Dream Fulfilled">
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <h3 class="card-title">A Dream Fulfilled</h3>
+                        <div class="play-tape-btn">▶</div>
+                    </div>
+                </div>
+
+                <div class="film-card" onclick="openModal('Access Granted', 'Access Granted is an interactive cyber security documentary that highlights how human error is often the leading factor when it comes to cyber crimes and breaches.', 'https://www.youtube.com/embed/Ov8xZ7kE75c', 'Interactive Documentary', '2024', '3 Months', '4', 'accessgranted.html')">
+                    <div class="card-hud-info">
+                        <span>Interactive Documentary</span>
+                        <span>2025</span>
+                    </div>
+                    <div class="card-image-wrapper">
+                        <div class="sprocket-frame">
+                            <div class="sprocket-holes-left"></div>
+                            <div class="sprocket-holes-right"></div>
+                            <img src="Images/AccessGrantedHor.jpg" alt="Access Granted">
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <h3 class="card-title">Access Granted</h3>
+                        <div class="play-tape-btn">▶</div>
+                    </div>
+                </div>
+
+                <div class="film-card" onclick="openModal('Search for Life', 'An experimental short film exploring a personal and intimate journey exploring gender dysphoria.', 'https://www.youtube.com/embed/4O3DBPLhO-w', 'Short Film', '2024', '3 Months', 'Solo Creator', 'searchforlife.html')">
+                    <div class="card-hud-info">
+                        <span>Short Film</span>
+                        <span>2024</span>
+                    </div>
+                    <div class="card-image-wrapper">
+                        <div class="sprocket-frame">
+                            <div class="sprocket-holes-left"></div>
+                            <div class="sprocket-holes-right"></div>
+                            <img src="Images/SearchforLifeHor.jpg" alt="Search for Life">
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <h3 class="card-title">Search for Life</h3>
+                        <div class="play-tape-btn">▶</div>
+                    </div>
+                </div>
+
+                <div class="film-card" onclick="openGalleryModal('ESCA', 'ESCA is an application created to help people engage in positive forms of escapism, giving them a personalised selection of activities in their area. From trails, to events, to mental health resources, ESCA will benefit each user in a unique way.', ['Images/ESCA.jpg', 'Images/escalarge1.jpg', 'Images/escalarge2.jpg', 'Images/escafinal.jpg'], 'UX/UI', '2024', '3 Months', '3', 'esca.html')">
+                    <div class="card-hud-info">
+                        <span>UX/UI</span>
+                        <span>2024</span>
+                    </div>
+                    <div class="card-image-wrapper">
+                        <div class="sprocket-frame">
+                            <div class="sprocket-holes-left"></div>
+                            <div class="sprocket-holes-right"></div>
+                            <img src="Images/ESCA.jpg" alt="ESCA">
+                            <div class="film-stock-text">UI Presentation</div>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <h3 class="card-title">ESCA</h3>
+                        <div class="play-tape-btn">▶</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="section-wrapper">
+        <div class="panel-box">
+            <div class="section-header-bar">
+                <h2 class="section-heading">Main Disciplines</h2>
+                <span class="section-tag">[ SKILLS ]</span>
+            </div>
+            <div class="disciplines-grid">
+                
+                <div class="discipline-card">
+                    <div class="discipline-icon">✦</div>
+                    <h3 class="discipline-title">Post-Production & Special Effects</h3>
+                    <p class="discipline-desc">Although many of my projects involve taking on multiple roles, through my short films and Final Year Project, I have become particularly apt at leveraging tools like After Effects and Blender to combine digital manipulation, motion graphics, and 3D modeling with real world imagery. This blend allows me to turn abstract or complex concepts such as psychological themes and surreal landscapes into immersive, high-impact visuals.</p>
+                </div>
+                <div class="discipline-card">
+                    <div class="discipline-icon">✦</div>
+                    <h3 class="discipline-title">Producing & Project Organisation</h3>
+                    <p class="discipline-desc">Bringing a project to life requires structured planning and adaptability under pressure. From concept development, budgeting, and location scouting to timeline tracking and team coordination, I manage every moving part of production to guarantee projects deliver on vision and deadline. Also, given my experiences with CIFF, and Priosma, this skill moves beyond the screen and translates to real world communication and organisation.</p>
+                </div>
+                <div class="discipline-card">
+                    <div class="discipline-icon">✦</div>
+                    <h3 class="discipline-title">Graphic Design</h3>
+                    <p class="discipline-desc">Through my time interning at Apple creating numerous logos, posters and icons for various projects in a fast paced environment, along with regularly creating marketing content for my own short films and projects, for example designing a book and posters for my Final Year Project, The New Age Enlightened Orthodox Brotherhood of the Righteous Divine, I construct strong visual systems that communicate narrative themes at a glance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="section-wrapper">
+    <div class="panel-box contact-panel">
+        <span class="section-tag">[ COLLABORATE ]</span>
+        <h2 class="huge-cta glitch-text">
+            <a href="https://www.linkedin.com/in/kaiae/" target="_blank" style="text-decoration: none; color: inherit; display: inline-block;">
+                Let's Connect!
+            </a>
+        </h2>
+        <a href="mailto:kegritepe27@gmail.com" class="mail-btn">Or Email Me Here!</a>
+    </div>
+</div>
+
+
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="vhs-deck-modal" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="closeModalDirect()">×</button>
+
+            <div class="player-viewport" id="videoViewport">
+                <iframe id="modalIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <div class="gallery-viewport" id="galleryViewport" style="display: none;">
+                <img id="galleryImg" src="" alt="Gallery Slide">
+                <div class="gallery-nav-overlay">
+                    <button class="deck-btn" onclick="prevSlide()" style="padding: 6px 12px; font-size: 13px;">◀ Prev</button>
+                    <span class="gallery-counter" id="slideCounter">1 / 1</span>
+                    <button class="deck-btn" onclick="nextSlide()" style="padding: 6px 12px; font-size: 13px;">Next ▶</button>
+                </div>
+            </div>
+
+            <div class="deck-controls">
+                <button class="deck-btn" id="playPauseBtn" onclick="togglePlayPause()">
+                    <span>▶ Play / Pause</span>
+                </button>
+                <a class="deck-btn" id="infoLinkBtn" href="#">
+                    <span>ℹ Project Info</span>
+                </a>
+            </div>
+
+            <div class="project-modal-info">
+                <div>
+                    <h2 class="card-title" id="modalTitle" style="font-size: 2.2rem; margin-bottom: 12px; -webkit-line-clamp: unset;">Title</h2>
+                    <p class="modal-description" id="modalDesc">Description goes here.</p>
+                </div>
+                <div class="meta-list">
+                    <div><strong>Category:</strong> <span id="modalCategory">-</span></div>
+                    <div><strong>Year:</strong> <span id="modalYear">-</span></div>
+                    <div><strong>Timeline:</strong> <span id="modalTimeline">-</span></div>
+                    <div><strong>Team Size:</strong> <span id="modalTeamSize">-</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CRT Toggle
+        function toggleCRT() {
+            const crt = document.getElementById('crtLayer');
+            const btn = document.querySelector('.controls-bar .retro-btn');
+            crt.classList.toggle('off');
+            btn.textContent = crt.classList.contains('off') ? 'CRT: OFF' : 'CRT: ON';
+        }
+
+        let isPlaying = false;
+        let isGalleryMode = false;
+        let currentGalleryImages = [];
+        let currentSlideIndex = 0;
+        let slideshowInterval = null;
+        let isSlideshowPlaying = false;
+
+        function openModal(title, desc, videoUrl, category, year, timeline, teamSize, linkUrl) {
+            isGalleryMode = false;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('modalCategory').textContent = category;
+            document.getElementById('modalYear').textContent = year;
+            document.getElementById('modalTimeline').textContent = timeline;
+            document.getElementById('modalTeamSize').textContent = teamSize;
+            
+            const infoBtn = document.getElementById('infoLinkBtn');
+            infoBtn.href = linkUrl || '#';
+
+            document.getElementById('videoViewport').style.display = 'block';
+            document.getElementById('galleryViewport').style.display = 'none';
+            
+            const iframe = document.getElementById('modalIframe');
+            let src = videoUrl;
+            if (!src.includes('enablejsapi=1')) {
+                src += (src.includes('?') ? '&' : '?') + 'enablejsapi=1';
+            }
+
+            src = src.replace('&autoplay=1', '').replace('?autoplay=1&', '?').replace('?autoplay=1', '');
+            iframe.src = src;
+
+            document.getElementById('modalOverlay').classList.add('active');
+            isPlaying = false; // Start paused since autoplay is disabled
+            updatePlayButtonText();
+        }
+
+        function openGalleryModal(title, desc, imagesArray, category, year, timeline, teamSize, linkUrl) {
+            isGalleryMode = true;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('modalCategory').textContent = category;
+            document.getElementById('modalYear').textContent = year;
+            document.getElementById('modalTimeline').textContent = timeline;
+            document.getElementById('modalTeamSize').textContent = teamSize;
+            
+            const infoBtn = document.getElementById('infoLinkBtn');
+            infoBtn.href = linkUrl || '#';
+
+            currentGalleryImages = imagesArray || [];
+            currentSlideIndex = 0;
+
+            document.getElementById('videoViewport').style.display = 'none';
+            document.getElementById('galleryViewport').style.display = 'flex';
+            document.getElementById('modalIframe').src = '';
+
+            updateGallerySlide();
+
+            document.getElementById('modalOverlay').classList.add('active');
+            isSlideshowPlaying = false;
+            updatePlayButtonText();
+        }
+
+        function updateGallerySlide() {
+            if (currentGalleryImages.length === 0) return;
+            document.getElementById('galleryImg').src = currentGalleryImages[currentSlideIndex];
+            document.getElementById('slideCounter').textContent = `${currentSlideIndex + 1} / ${currentGalleryImages.length}`;
+        }
+
+        function nextSlide() {
+            if (currentGalleryImages.length === 0) return;
+            currentSlideIndex = (currentSlideIndex + 1) % currentGalleryImages.length;
+            updateGallerySlide();
+        }
+
+        function prevSlide() {
+            if (currentGalleryImages.length === 0) return;
+            currentSlideIndex = (currentSlideIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+            updateGallerySlide();
+        }
+
+        function closeModalDirect() {
+            const overlay = document.getElementById('modalOverlay');
+            overlay.classList.remove('active');
+            document.getElementById('modalIframe').src = '';
+            if (slideshowInterval) clearInterval(slideshowInterval);
+            isPlaying = false;
+            isSlideshowPlaying = false;
+        }
+
+        function closeModal(event) {
+            if (event.target === document.getElementById('modalOverlay')) {
+                closeModalDirect();
+            }
+        }
+
+        function togglePlayPause() {
+            if (isGalleryMode) {
+                if (isSlideshowPlaying) {
+                    clearInterval(slideshowInterval);
+                    isSlideshowPlaying = false;
+                } else {
+                    slideshowInterval = setInterval(() => {
+                        nextSlide();
+                    }, 3000);
+                    isSlideshowPlaying = true;
+                }
+                updatePlayButtonText();
+            } else {
+                const iframe = document.getElementById('modalIframe');
+                if (isPlaying) {
+                    iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'pauseVideo', args: ''}), '*');
+                    isPlaying = false;
+                } else {
+                    iframe.contentWindow.postMessage(JSON.stringify({event: 'command', func: 'playVideo', args: ''}), '*');
+                    isPlaying = true;
+                }
+                updatePlayButtonText();
+            }
+        }
+
+        function updatePlayButtonText() {
+            const btn = document.getElementById('playPauseBtn');
+            if (isGalleryMode) {
+                btn.innerHTML = isSlideshowPlaying ? '<span>❚❚ Pause Slideshow</span>' : '<span>▶ Play Slideshow</span>';
+            } else {
+                btn.innerHTML = isPlaying ? '<span>❚❚ Pause</span>' : '<span>▶ Play</span>';
+            }
+        }
+
+        document.querySelectorAll('.glitch-text').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - (rect.width / 2);
+                const y = e.clientY - rect.top - (rect.height / 2);
+                const shadowX = x * 0.08;
+                const shadowY = y * 0.08;
+                el.style.textShadow = `${shadowX}px ${shadowY}px 0px var(--accent-pink), ${-shadowX}px ${-shadowY}px 0px var(--accent-blue)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.textShadow = '6px 6px 0px var(--bg-purple-panel)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Granted</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-black: #0A0A0C;
+            --bg-dark-panel: #120F1D;
+            --bg-purple-panel: #1B122C;
+            --accent-pink: #FF2E93;
+            --accent-blue: #00F0FF;
+            --accent-yellow: #FFE600;
+            --text-white: #FFFFFF;
+            --text-muted: #A09DBA;
+            --border-stark: #FFFFFF;
+            --border-subtle: #30264A;
+            --vhs-green: #00FF66;
+            --crt-scanline: rgba(18, 16, 16, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .film-grain {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200vw;
+            height: 200vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 9998;
+            animation: grainShift 0.3s steps(4) infinite;
+        }
+
+        @keyframes grainShift {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-3%, 3%); }
+            50% { transform: translate(3%, -2%); }
+            75% { transform: translate(-2%, -3%); }
+            100% { transform: translate(2%, 1%); }
+        }
+
+        .crt-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 50%,
+                var(--crt-scanline) 50%,
+                var(--crt-scanline)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9997;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .crt-layer.off { opacity: 0; }
+
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+            transition: text-shadow 0.1s ease-out;
+            cursor: pointer;
+        }
+
+        .header-nav {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-white);
+        }
+
+        .logo-badge {
+            width: 44px;
+            height: 44px;
+            background: var(--accent-pink);
+            color: var(--bg-black);
+            border: 2px solid var(--border-stark);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            font-family: 'Anton', sans-serif;
+            box-shadow: 3px 3px 0px var(--accent-blue);
+        }
+
+        .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .retro-btn {
+            background: var(--bg-dark-panel);
+            color: var(--text-white);
+            border: 2px solid var(--border-stark);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--border-stark);
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .retro-btn:hover {
+            background: var(--accent-pink);
+            color: var(--bg-black);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--accent-blue);
+        }
+
+        .project-hero-section {
+            background: var(--bg-purple-panel);
+            border-bottom: 2px solid var(--border-stark);
+            padding: 60px 30px 50px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .title-container {
+            position: relative;
+            display: inline-block;
+            max-width: 1000px;
+            margin: 0 auto 24px auto;
+        }
+
+        .project-main-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 6rem);
+            line-height: 0.95;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 4px 4px 0px var(--bg-black);
+            margin: 0;
+        }
+
+        .project-tag-pill {
+            position: absolute;
+            bottom: -12px;
+            right: -10px;
+            background: var(--accent-yellow);
+            color: var(--bg-black);
+            border: 2px solid var(--border-stark);
+            padding: 6px 18px;
+            border-radius: 12px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 4px 4px 0px var(--bg-black);
+            transform: rotate(5deg);
+            z-index: 10;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 600px) {
+            .project-tag-pill {
+                position: relative;
+                display: inline-block;
+                bottom: auto;
+                right: auto;
+                margin-top: 10px;
+                transform: rotate(2deg);
+            }
+        }
+
+        .project-subtitle {
+            max-width: 750px;
+            margin: 16px auto 36px auto;
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            line-height: 1.6;
+        }
+
+        .meta-pill-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .meta-pill {
+            background: var(--bg-dark-panel);
+            border: 2px solid var(--border-stark);
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-blue);
+            box-shadow: 4px 4px 0px var(--border-stark);
+        }
+
+        .meta-pill span {
+            color: var(--text-white);
+            margin-left: 6px;
+        }
+
+        .case-study-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 30px;
+        }
+
+        .main-media-frame {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            background: #000;
+            border: 3px solid var(--border-stark);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 8px 8px 0px var(--accent-pink);
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .main-media-frame iframe, 
+        .main-media-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+        }
+
+        .section-text-block {
+            background: var(--bg-dark-panel);
+            border: 2px solid var(--border-stark);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 6px 6px 0px var(--bg-purple-panel);
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .section-block-title {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 1500;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+     
+            margin-bottom: 16px;
+        }
+
+        .section-block-body {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .two-col-gallery {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        @media (min-width: 768px) {
+            .two-col-gallery {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .gallery-item-frame {
+            height: 380px;
+            border: 2px solid var(--border-stark);
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 6px 6px 0px var(--bg-purple-panel);
+            position: relative;
+        }
+
+        .gallery-item-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(110%);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item-frame:hover img {
+            transform: scale(1.04);
+        }
+
+        .two-col-text-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        @media (min-width: 768px) {
+            .two-col-text-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .text-card {
+            background: var(--bg-purple-panel);
+            border: 2px solid var(--border-stark);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 6px 6px 0px var(--border-stark);
+        }
+
+        .text-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 1500;
+            font-size: 2.2rem;
+            color: var(--accent-pink);
+            text-transform: uppercase;
+      
+            margin-bottom: 12px;
+        }
+
+        .text-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .secondary-hero-frame {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border: 3px solid var(--border-stark);
+            border-radius: 20px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 8px 8px 0px var(--accent-blue);
+            margin-bottom: 70px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .secondary-hero-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .gallery-nav-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(10, 10, 12, 0.88);
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border-stark);
+            box-shadow: 4px 4px 0px var(--bg-black);
+            z-index: 10;
+        }
+
+        .gallery-counter {
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent-yellow);
+            font-size: 14px;
+            letter-spacing: 1.5px;
+        }
+
+        .deck-nav-btn {
+            background: var(--bg-purple-panel);
+            color: var(--text-white);
+            border: 1px solid var(--border-stark);
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .deck-nav-btn:hover {
+            background: var(--accent-pink);
+            color: var(--bg-black);
+        }
+
+        .explore-more-panel {
+            background: var(--bg-purple-panel);
+            border: 2px solid var(--border-stark);
+            border-radius: 20px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 10px 10px 0px var(--bg-dark-panel);
+            margin-bottom: 50px;
+        }
+
+        .explore-tag {
+            display: inline-block;
+            background: var(--accent-pink);
+            color: var(--bg-black);
+            border: 2px solid var(--border-stark);
+            padding: 4px 14px;
+            border-radius: 12px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .explore-heading {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .nav-actions-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 16px;
+        }
+
+        .nav-action-btn {
+            background: var(--bg-dark-panel);
+            color: var(--text-white);
+            border: 2px solid var(--border-stark);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            box-shadow: 3px 3px 0px var(--border-stark);
+            transition: all 0.15s ease;
+        }
+
+        .nav-action-btn:hover {
+            background: var(--accent-pink);
+            color: var(--bg-black);
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px var(--accent-blue);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="film-grain"></div>
+    <div class="crt-layer" id="crtLayer"></div>
+
+    <header class="header-nav">
+        <a href="index.html" class="logo-box">
+            <div class="logo-badge">K</div>
+            <span class="logo-text">Kaia</span>
+        </a>
+        <div class="header-actions">
+            <button class="retro-btn" onclick="toggleCRT()">CRT: ON</button>
+            <a href="index.html" class="retro-btn">← Back to Works</a>
+        </div>
+    </header>
+
+    <section class="project-hero-section">
+        <div class="title-container">
+            <h1 class="project-main-title glitch-text">Access Granted</h1>
+        </div>
+
+        <p class="project-subtitle">
+          Access Granted is an interactive cyber security documentary that highlights how human error is often the leading factor when it comes to cyber crimes and breaches.
+        </p>
+
+        <div class="meta-pill-row">
+            <div class="meta-pill">Category: <span>Interactive Documentary</span></div>
+            <div class="meta-pill">Year: <span>2024</span></div>
+            <div class="meta-pill">Timeline: <span>3 Months</span></div>
+            <div class="meta-pill">Team Size: <span>4</span></div>
+        </div>
+    </section>
+
+    <main class="case-study-container">
+
+              <div class="main-media-frame">
+            <iframe src="https://www.youtube.com/embed/Ov8xZ7kE75c?enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="section-text-block">
+            <h2 class="section-block-title">Role:</h2>
+            <p class="section-block-body">
+               Working in a team of 4 to bring the project to life, my primary role was as Motion Graphics Designer. Using After Effects I created all the videos seen in the documentary, creating engaging visuals, establishing the visual identity of them, and working closely with the UI/UX Designer to make sure that the videos flowed and worked correctly with the interactive elements. I also worked heavily on the research phase of the project, looking into types of cyber crimes, case studies, and audiences. I also created the branding including the poster and thumbnail you've seen here!
+                </p>
+        </div>
+
+        <div class="two-col-gallery">
+            <div class="gallery-item-frame">
+                <img src="Images/germ1.jpg" alt="Development Still 1">
+            </div>
+            <div class="gallery-item-frame">
+                <img src="Images/germ2.jpg" alt="Development Still 2">
+            </div>
+        </div>
+
+        <div class="two-col-text-grid">
+            <div class="text-card">
+                <h3>Why?:</h3>
+                <p>
+                   We found that each year cyber crimes and breaches increase, with Gen Z being particularly vulnerable. With that our goal was to create an engaging but informative piece of media that can both highlight the risks but also make what can often be quite a boring subject to younger audiences into something entertaining for them.
+                </p>
+            </div>
+            <div class="text-card">
+                <h3>Results:</h3>
+                <p>
+                   After the completion of the project, the group was selected as part of Ingenium to visit HKA Karlsruhe, and present the project and out findings there. The project was completed as an interactive prototype in Figma in which viewers can explore and interact with the content of the documentary in a non-linear fashion.
+                </p>
+            </div>
+        </div>
+
+        <div class="secondary-hero-frame">
+            <img id="slideshowImg" src="Images/Flowchart.jpg" alt="Project Slideshow Still">
+            <div class="gallery-nav-overlay">
+                <button class="deck-nav-btn" onclick="prevSlide()">◀ Prev</button>
+                <span class="gallery-counter" id="slideCounter">1 / 5</span>
+                <button class="deck-nav-btn" onclick="nextSlide()">Next ▶</button>
+            </div>
+        </div>
+
+          <div class="explore-more-panel">
+    <a href="index.html" class="explore-heading glitch-text" style="text-decoration: none; color: inherit; display: inline-block;">
+        Explore More
+    </a>
+</div>
+
+        <div class="nav-actions-row">
+            <a href="adreamfulfilled.html" class="nav-action-btn">← Previous Project</a>
+            <a href="searchforlife.html" class="nav-action-btn">Next Project →</a>
+        </div>
+
+
+
+    </main>
+
+    <script>
+        function toggleCRT() {
+            const crt = document.getElementById('crtLayer');
+            const btn = document.querySelector('.header-actions .retro-btn');
+            crt.classList.toggle('off');
+            btn.textContent = crt.classList.contains('off') ? 'CRT: OFF' : 'CRT: ON';
+        }
+
+        const slideshowImages = [
+            'Images/Flowchart.jpg',
+        'Images/btsAcc.jpeg',
+            'Images/SB1.jpeg',
+            'Images/SB2.jpeg',
+            'Images/sketch1.jpeg',
+        ];
+        let currentSlide = 0;
+
+        function updateSlide() {
+            document.getElementById('slideshowImg').src = slideshowImages[currentSlide];
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${slideshowImages.length}`;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slideshowImages.length;
+            updateSlide();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slideshowImages.length) % slideshowImages.length;
+            updateSlide();
+        }
+
+        document.querySelectorAll('.glitch-text').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - (rect.width / 2);
+                const y = e.clientY - rect.top - (rect.height / 2);
+                const shadowX = x * 0.08;
+                const shadowY = y * 0.08;
+                el.style.textShadow = `${shadowX}px ${shadowY}px 0px var(--accent-pink), ${-shadowX}px ${-shadowY}px 0px var(--accent-blue)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.textShadow = '4px 4px 0px var(--bg-black)';
+            });
+        });
+    </script>
+</body>
+</html>
